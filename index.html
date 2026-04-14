@@ -3,63 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Node Studios | AI & Automation Consultancy</title>
+    <title>Node Studios | Local-First AI Orchestration</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .mono { font-family: 'JetBrains Mono', monospace; }
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- React & Babel CDNs -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'node-dark': '#0a0a0a',
+                        'node-gray': '#1a1a1a',
+                        'node-accent': '#40E0D0',
+                        'node-blue': '#0070f3',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/css">
+        body {
+            background-color: #0a0a0a;
+            color: #f3f4f6;
+        }
+        .node-grid {
+            background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+        .glass-card {
+            background: rgba(26, 26, 26, 0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #fff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom animations to replace Framer Motion in standalone */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-200">
+<body class="selection:bg-node-accent selection:text-node-dark">
+    <div id="root"></div>
 
-    <header class="max-w-6xl mx-auto px-6 py-20 text-center">
-        <h1 class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent mb-6">
-            Node Studios
-        </h1>
-        <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-10">
-            Orchestrating multi-agent systems and RAG pipelines. Tested locally with <span class="text-emerald-400 mono text-lg">Ollama</span> to ensure privacy and cost-efficiency.
-        </p>
-        <div class="flex flex-col md:flex-row justify-center gap-4">
-            <a href="https://calendar.app.google/jTdXoN1FTVBhVYy49" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-full font-bold transition duration-300">
-                Book a Discovery Call
-            </a>
-            <a href="#services" class="border border-slate-700 hover:border-slate-500 px-8 py-4 rounded-full font-bold transition duration-300">
-                View Services
-            </a>
-        </div>
-    </header>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-    <section class="bg-slate-900/50 py-20 border-y border-slate-800">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-6">The Local-First Advantage</h2>
-            <p class="text-lg text-slate-400 leading-relaxed">
-                We believe in "Privacy by Design." By testing all n8n workflows and AI agents locally using Ollama, we eliminate development-phase token costs and keep your sensitive data off the cloud until it's ready for production.
-            </p>
-        </div>
-    </section>
+        const Navbar = () => (
+            <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-node-dark/80 backdrop-blur-xl">
+                <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-node-accent rounded flex items-center justify-center">
+                            <i data-lucide="terminal" className="w-5 h-5 text-node-dark"></i>
+                        </div>
+                        <span className="font-mono font-bold text-lg tracking-tighter uppercase">Node Studios</span>
+                    </div>
+                    <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+                        <a href="#advantage" className="hover:text-node-accent transition-colors">Advantage</a>
+                        <a href="#services" className="hover:text-node-accent transition-colors">Services</a>
+                        <a href="#about" className="hover:text-node-accent transition-colors">About</a>
+                        <a 
+                            href="https://calendar.app.google/jTdXoN1FTVBhVYy49"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-4 py-2 bg-white text-node-dark rounded-full hover:bg-node-accent transition-all"
+                        >
+                            Book a Call
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        );
 
-    <section id="services" class="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-3 gap-8">
-        <div class="p-8 bg-slate-900 rounded-2xl border border-slate-800">
-            <div class="text-blue-400 mb-4 text-3xl">⚙️</div>
-            <h3 class="text-xl font-bold mb-2">n8n Orchestration</h3>
-            <p class="text-slate-400">Complex API integrations and production-grade automation workflows built for scale.</p>
-        </div>
-        <div class="p-8 bg-slate-900 rounded-2xl border border-slate-800">
-            <div class="text-emerald-400 mb-4 text-3xl">🧠</div>
-            <h3 class="text-xl font-bold mb-2">RAG Pipelines</h3>
-            <p class="text-slate-400">Making AI truly knowledgeable about your specific business data and documentation.</p>
-        </div>
-        <div class="p-8 bg-slate-900 rounded-2xl border border-slate-800">
-            <div class="text-purple-400 mb-4 text-3xl">🤖</div>
-            <h3 class="text-xl font-bold mb-2">Multi-Agent Systems</h3>
-            <p class="text-slate-400">Autonomous agents that collaborate to solve high-level tasks without constant supervision.</p>
-        </div>
-    </section>
+        const Hero = () => (
+            <section className="relative pt-32 pb-20 overflow-hidden min-h-[90vh] flex items-center">
+                <div className="absolute inset-0 node-grid opacity-20"></div>
+                <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="nodes" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                            <circle cx="10" cy="10" r="1" fill="#40E0D0" />
+                            <circle cx="60" cy="40" r="1" fill="#40E0D0" />
+                            <circle cx="30" cy="80" r="1" fill="#40E0D0" />
+                            <line x1="10" y1="10" x2="60" y2="40" stroke="white" strokeWidth="0.5" opacity="0.2" />
+                            <line x1="60" y1="40" x2="30" y2="80" stroke="white" strokeWidth="0.5" opacity="0.2" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#nodes)" />
+                </svg>
+                <div className="absolute top-1/4 -left-20 w-96 h-96 bg-node-accent/10 blur-[120px] rounded-full"></div>
+                <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-node-blue/10 blur-[120px] rounded-full"></div>
+                
+                <div className="max-w-7xl mx-auto px-6 relative">
+                    <div className="max-w-3xl animate-fade-in-up">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-node-accent/10 border border-node-accent/20 text-node-accent text-xs font-mono mb-6">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-node-accent opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-node-accent"></span>
+                            </span>
+                            Local-First AI Orchestration
+                        </div>
+                        <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-8 leading-[0.9] text-gradient">
+                            Architecting <br />
+                            Multi-Agent <br />
+                            <span className="text-node-accent">Intelligence.</span>
+                        </h1>
+                        <p className="text-xl text-gray-400 mb-10 leading-relaxed max-w-xl">
+                            We build production-grade AI pipelines that live where your data does. 
+                            Privacy-focused, cost-optimized, and locally validated.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        );
 
-    <footer class="py-10 text-center border-t border-slate-900">
-        <p class="text-slate-500 text-sm">© 2026 Node Studios. Based in Windsor, Ontario.</p>
-    </footer>
+        const Advantage = () => (
+            <section id="advantage" className="py-24 border-y border-white/5 bg-node-gray/30">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="grid md:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <h2 className="text-4xl font-bold mb-6">The Local-First <br /><span className="text-node-accent">Advantage</span></h2>
+                            <p className="text-gray-400 text-lg mb-8">
+                                Most consultancies build in the cloud, billing you for every test run and exposing your sensitive data to third-party APIs. We do things differently.
+                            </p>
+                            <div className="space-y-6">
+                                {[
+                                    { 
+                                        title: "Local Model Infrastructure", 
+                                        desc: "We develop and stress-test multi-agent workflows locally using private inference engines before ever touching a production API.",
+                                        icon: "cpu"
+                                    },
+                                    { 
+                                        title: "100% Data Privacy", 
+                                        desc: "Your proprietary data never leaves your infrastructure during the development and validation phase.",
+                                        icon: "shield-check"
+                                    },
+                                    { 
+                                        title: "Zero Dev-Phase Costs", 
+                                        desc: "We don't bill clients for 'learning' or 'testing' tokens. You pay for the solution, not our R&D.",
+                                        icon: "zap"
+                                    }
+                                ].map((item, i) => (
+                                    <div key={i} className="flex gap-4">
+                                        <div className="mt-1 w-10 h-10 shrink-0 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                                            <i data-lucide={item.icon} className="w-5 h-5 text-node-accent"></i>
+                                        </div>
+                                        <div>
+                                            <h3 className="font-bold mb-1">{item.title}</h3>
+                                            <p className="text-sm text-gray-500">{item.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="relative">
+                            <div className="glass-card p-8 aspect-square flex flex-col justify-between overflow-hidden relative group">
+                                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                    <i data-lucide="terminal" className="w-64 h-64"></i>
+                                </div>
+                                <div className="space-y-4 font-mono text-sm relative z-10">
+                                    <div className="text-node-accent">$ node run-local --model deepseek-r1</div>
+                                    <div className="text-gray-500">{">>> Initializing multi-agent swarm..."}</div>
+                                    <div className="text-gray-500">{">>> Agent 1: Researcher (Local)"}</div>
+                                    <div className="text-gray-500">{">>> Agent 2: Validator (Local)"}</div>
+                                    <div className="text-node-accent">{">>> Swarm validated. 0 tokens billed."}</div>
+                                </div>
+                                <div className="mt-auto pt-8 border-t border-white/10 relative z-10">
+                                    <div className="text-xs uppercase tracking-widest text-gray-500 mb-2">Local Environment Status</div>
+                                    <div className="flex items-center gap-4">
+                                        <div className="flex-1 h-1 bg-white/10 rounded-full overflow-hidden">
+                                            <div className="w-3/4 h-full bg-node-accent"></div>
+                                        </div>
+                                        <span className="text-xs font-mono">98% Efficiency</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
 
+        const WhyLocalMatters = () => (
+            <section className="py-24 bg-node-dark relative overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
+                    <h2 className="text-4xl font-bold mb-16">Why Local Testing Matters</h2>
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {[
+                            {
+                                title: "No Token Billing",
+                                desc: "We deliver a finished, locally-validated product. We don't bill clients for the thousands of tokens consumed during the prompt engineering and debugging phase.",
+                                icon: "zap"
+                            },
+                            {
+                                title: "Rapid Iteration",
+                                desc: "Local testing means zero latency and no rate limits. We iterate 10x faster than cloud-dependent teams, getting your project to production sooner.",
+                                icon: "workflow"
+                            },
+                            {
+                                title: "Security by Default",
+                                desc: "By testing with local models, we ensure your RAG pipelines are architecturally sound before connecting to any external services.",
+                                icon: "shield-check"
+                            }
+                        ].map((item, i) => (
+                            <div key={i} className="glass-card p-8 text-left hover:border-node-accent/50 transition-colors">
+                                <i data-lucide={item.icon} className="w-10 h-10 text-node-accent mb-6"></i>
+                                <h3 className="text-xl font-bold mb-4">{item.title}</h3>
+                                <p className="text-gray-400 leading-relaxed">{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Services = () => (
+            <section id="services" className="py-24 bg-node-gray/20">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="mb-16">
+                        <h2 className="text-4xl font-bold mb-4">Core Competencies</h2>
+                        <p className="text-gray-400 max-w-2xl">Specialized expertise in the modern AI stack. We don't just build wrappers; we build infrastructure.</p>
+                    </div>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {[
+                            {
+                                title: "Workflow Orchestration",
+                                desc: "Complex, production-grade automation pipelines that connect your AI swarms to your existing business tools.",
+                                tags: ["Workflows", "Webhooks", "Self-Hosted"],
+                                icon: "workflow"
+                            },
+                            {
+                                title: "RAG Systems",
+                                desc: "Retrieval-Augmented Generation that makes AI 'know' your company's specific data with pinpoint accuracy.",
+                                tags: ["Vector DBs", "Embeddings", "Semantic Search"],
+                                icon: "database"
+                            },
+                            {
+                                title: "Multi-Agent Swarms",
+                                desc: "Specialized agents that collaborate to solve complex reasoning tasks that single-prompt LLMs can't handle.",
+                                tags: ["Autogen", "CrewAI", "LangGraph"],
+                                icon: "cpu"
+                            },
+                            {
+                                title: "MCP Integration",
+                                desc: "Standardizing AI-to-data connectivity using the Model Context Protocol for seamless tool and resource integration.",
+                                tags: ["MCP", "Tooling", "Interoperability"],
+                                icon: "code-2"
+                            }
+                        ].map((service, i) => (
+                            <div key={i} className="glass-card p-8 group hover:bg-node-gray transition-all">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="w-12 h-12 rounded-lg bg-node-accent/10 flex items-center justify-center">
+                                        <i data-lucide={service.icon} className="text-node-accent"></i>
+                                    </div>
+                                    <i data-lucide="arrow-up-right" className="w-5 h-5 text-gray-600 group-hover:text-node-accent transition-colors"></i>
+                                </div>
+                                <h3 className="text-xl font-bold mb-3">{service.title}</h3>
+                                <p className="text-gray-500 mb-6 text-sm leading-relaxed">{service.desc}</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {service.tags.map((tag, j) => (
+                                        <span key={j} className="text-[10px] font-mono uppercase tracking-wider px-2 py-1 rounded bg-white/5 text-gray-400 border border-white/5">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const About = () => (
+            <section id="about" className="py-24">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="glass-card p-12 flex flex-col md:flex-row gap-12 items-center">
+                        <div className="w-48 h-48 shrink-0 rounded-2xl bg-node-accent border border-white/10 overflow-hidden relative flex items-center justify-center">
+                            <i data-lucide="terminal" className="w-24 h-24 text-node-dark"></i>
+                        </div>
+                        <div>
+                            <h2 className="text-3xl font-bold mb-4">About US</h2>
+                            <p className="text-gray-400 text-lg mb-6 leading-relaxed">
+                                Node Studios was founded on the principle that AI development should be transparent, secure, and efficient. 
+                                With a background in systems architecture and automation, we bridge the gap between "AI Hype" and "AI Utility."
+                            </p>
+                            <div className="flex gap-4">
+                                <a href="https://www.linkedin.com/in/advait-ranade-3bba3612a/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/5 hover:bg-node-accent/20 transition-colors">
+                                    <i data-lucide="linkedin" className="w-5 h-5"></i>
+                                </a>
+                                <a href="mailto:advaitranade4@gmail.com" className="p-2 rounded-full bg-white/5 hover:bg-node-accent/20 transition-colors">
+                                    <i data-lucide="mail" className="w-5 h-5"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Footer = () => (
+            <footer id="contact" className="py-20 border-t border-white/5">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <h2 className="text-5xl md:text-7xl font-bold mb-8 tracking-tighter">Ready to build?</h2>
+                    <p className="text-gray-400 mb-12 max-w-xl mx-auto">
+                        Let's discuss your multi-agent architecture. Book a free 30-minute discovery call to see how we can optimize your workflows.
+                    </p>
+                    <a 
+                        href="https://calendar.app.google/jTdXoN1FTVBhVYy49"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block px-12 py-6 bg-node-accent text-node-dark font-black text-xl rounded-full hover:scale-105 transition-transform shadow-[0_0_40px_rgba(0,255,65,0.3)]"
+                    >
+                        BOOK DISCOVERY CALL
+                    </a>
+                    
+                    <div className="mt-32 flex justify-center items-center pt-8 border-t border-white/5 text-gray-500 text-sm font-mono">
+                        <div>© 2026 NODE STUDIOS. ALL RIGHTS RESERVED.</div>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        const App = () => {
+            useEffect(() => {
+                // Initialize Lucide icons after component mounts
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, []);
+
+            return (
+                <div className="min-h-screen">
+                    <Navbar />
+                    <main>
+                        <Hero />
+                        <Advantage />
+                        <WhyLocalMatters />
+                        <Services />
+                        <About />
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
+
