@@ -179,7 +179,7 @@
                         <div className="relative">
                             <div className="glass-card p-8 aspect-square flex flex-col justify-between overflow-hidden relative group">
                                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                    <i data-lucide="terminal" className="w-64 h-64"></i>
+                                    <i data-lucide="terminal" className="w-64 h-64 text-white/5"></i>
                                 </div>
                                 <div className="space-y-4 font-mono text-sm relative z-10">
                                     <div className="text-node-accent">$ node run-local --model deepseek-r1</div>
@@ -308,10 +308,15 @@
                                 With a background in systems architecture and automation, we bridge the gap between "AI Hype" and "AI Utility."
                             </p>
                             <div className="flex gap-4">
-                                <a href="https://www.linkedin.com/in/advait-ranade-3bba3612a/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/5 hover:bg-node-accent/20 transition-colors">
-                                    <i data-lucide="linkedin" className="w-5 h-5"></i>
+                                <a href="https://www.linkedin.com/in/advait-ranade-3bba3612a/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/5 hover:bg-node-accent/20 transition-colors text-white overflow-hidden flex items-center justify-center">
+                                    <img 
+                                        src="https://ninjapng.com/public/storage/front-png/png-clipartlinkedin-logo-png-black-and-white-round-icon-circle-vector-transparent-social-media-symbol6577175-thumbnail.webp" 
+                                        alt="LinkedIn" 
+                                        className="w-5 h-5 object-cover invert brightness-200"
+                                        referrerPolicy="no-referrer"
+                                    />
                                 </a>
-                                <a href="mailto:advaitranade4@gmail.com" className="p-2 rounded-full bg-white/5 hover:bg-node-accent/20 transition-colors">
+                                <a href="mailto:advaitranade4@gmail.com" className="p-2 rounded-full bg-white/5 hover:bg-node-accent/20 transition-colors text-white">
                                     <i data-lucide="mail" className="w-5 h-5"></i>
                                 </a>
                             </div>
@@ -347,9 +352,17 @@
         const App = () => {
             useEffect(() => {
                 // Initialize Lucide icons after component mounts
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
+                // and on every subsequent potential update
+                const initIcons = () => {
+                    if (window.lucide) {
+                        window.lucide.createIcons();
+                    }
+                };
+                
+                initIcons();
+                // Short interval to catch any delayed React renders
+                const timeout = setTimeout(initIcons, 100);
+                return () => clearTimeout(timeout);
             }, []);
 
             return (
